@@ -1,0 +1,1 @@
+A desktop app that saves all GPUs from Emag and PcGarage, stores them in a database and displays them in a GUI created with Swing library. The project makes use of Selenium, Jsoup and MySQL connector.

@@ -1,5 +1,6 @@
 package com.sorinbratosin.BestGPUPrice.View;
 import com.sorinbratosin.BestGPUPrice.Database.GPU;
+import com.sorinbratosin.BestGPUPrice.Database.IllegalCharactersException;
 import com.sorinbratosin.BestGPUPrice.Service.GPUService;
 
 import javax.swing.*;
@@ -43,15 +44,20 @@ public class MainWindow {
         buttonAndTextPanel.add(searchButton);
 
         searchButton.addActionListener(e -> {
-            String value = searchTextField.getText();
-            if(!inStock.isSelected() && !orderByPriceAsc.isSelected()) {
-                tableModel.setDataVector(dataSelectAllGPUThatContain(value), COLUMN_NAMES);
-            } else if (inStock.isSelected() && !orderByPriceAsc.isSelected()){
-                tableModel.setDataVector(dataSelectAllGPUAvailableThatContain(value), COLUMN_NAMES);
-            } else if (!inStock.isSelected() && orderByPriceAsc.isSelected()){
-                tableModel.setDataVector(dataSelectAllGPUThatContainOrderByPriceAsc(value), COLUMN_NAMES);
-            } else if (inStock.isSelected() && orderByPriceAsc.isSelected()) {
-                tableModel.setDataVector(dataSelectAllGPUAvailableThatContainOrderByPriceAsc(value), COLUMN_NAMES);
+            try {
+                String value = searchTextField.getText();
+                if (!inStock.isSelected() && !orderByPriceAsc.isSelected()) {
+                    tableModel.setDataVector(dataSelectAllGPUThatContain(value), COLUMN_NAMES);
+                } else if (inStock.isSelected() && !orderByPriceAsc.isSelected()) {
+                    tableModel.setDataVector(dataSelectAllGPUAvailableThatContain(value), COLUMN_NAMES);
+                } else if (!inStock.isSelected() && orderByPriceAsc.isSelected()) {
+                    tableModel.setDataVector(dataSelectAllGPUThatContainOrderByPriceAsc(value), COLUMN_NAMES);
+                } else if (inStock.isSelected() && orderByPriceAsc.isSelected()) {
+                    tableModel.setDataVector(dataSelectAllGPUAvailableThatContainOrderByPriceAsc(value), COLUMN_NAMES);
+                }
+            } catch (IllegalCharactersException illegalCharactersException) {
+                searchTextField.setText("");
+                JOptionPane.showMessageDialog(jFrame, illegalCharactersException.getMessage());
             }
         });
 
@@ -118,25 +124,25 @@ public class MainWindow {
         return tableData(numOfRows);
     }
 
-    private Object[][] dataSelectAllGPUThatContain(String containsName) {
+    private Object[][] dataSelectAllGPUThatContain(String containsName) throws IllegalCharactersException {
         gpuList = gpuService.findByName(containsName);
         int numOfRows = gpuService.countAllWhereNameContains(containsName);
         return tableData(numOfRows);
     }
 
-    private Object[][] dataSelectAllGPUAvailableThatContain(String containsName) {
+    private Object[][] dataSelectAllGPUAvailableThatContain(String containsName) throws IllegalCharactersException {
         gpuList = gpuService.findAllAvailableThatContain(containsName);
         int numOfRows = gpuList.size();
         return tableData(numOfRows);
     }
 
-    private Object[][] dataSelectAllGPUThatContainOrderByPriceAsc(String containsName) {
+    private Object[][] dataSelectAllGPUThatContainOrderByPriceAsc(String containsName) throws IllegalCharactersException {
         gpuList = gpuService.findAllThatContainOrderByPrice(containsName);
         int numOfRows = gpuList.size();
         return tableData(numOfRows);
     }
 
-    private Object[][] dataSelectAllGPUAvailableThatContainOrderByPriceAsc(String containsName) {
+    private Object[][] dataSelectAllGPUAvailableThatContainOrderByPriceAsc(String containsName) throws IllegalCharactersException {
         gpuList = gpuService.findAllAvailableThatContainOrderByPrice(containsName);
         int numOfRows = gpuList.size();
         return tableData(numOfRows);

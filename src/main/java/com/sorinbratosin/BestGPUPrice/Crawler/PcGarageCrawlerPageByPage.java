@@ -21,9 +21,7 @@ public class PcGarageCrawlerPageByPage {
     private List<String> urlPageList = new ArrayList<>();
     private GPUService gpuService = new GPUService();
 
-    public List<GPU> extract(String website) {
-
-        List<GPU> events = new ArrayList<>();
+    public void extract(String website) {
 
         System.setProperty("webdriver.gecko.driver", "D:\\IntelliJ projects\\Best-GPU-Price\\src\\main\\resources\\res\\geckodriver.exe");
         FirefoxOptions options = new FirefoxOptions();
@@ -83,10 +81,8 @@ public class PcGarageCrawlerPageByPage {
                     gpu.setAvailable(true);
                 }
 
-                events.add(gpu);
                 gpuService.saveGPU(gpu);
             }
-        return events;
     }
 
     public List<String> getUrlPageList() {

@@ -14,13 +14,12 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmagCrawler {
+public class EmagCrawler implements Runnable {
 
     private GPUService gpuService = new GPUService();
 
-    public List<GPU> extract() {
+    public void extract() {
 
-        List<GPU> events = new ArrayList<>();
         List<String> urlPage = new ArrayList<>();
         urlPage.add("https://www.emag.ro/placi_video/c");
 
@@ -76,11 +75,14 @@ public class EmagCrawler {
                     gpu.setAvailable(false);
                 }
 
-                events.add(gpu);
                 gpuService.saveGPU(gpu);
             }
         }
         driver.quit();
-        return events;
+    }
+
+    @Override
+    public void run() {
+        extract();
     }
 }

@@ -31,4 +31,29 @@ public class GPUService {
     public List<GPU> findByName(String name) {
         return gpuMySqlDAO.findByName(name);
     }
+
+    public int countAllWhereNameContains(String name) {
+        return gpuMySqlDAO.countAllWhereNameContains(name);
+    }
+
+    public List<GPU> findAllOrderByPrice() {
+        return gpuMySqlDAO.findAllOrderByPrice();
+    }
+
+    public List<GPU> findAllAvailableOrderByPrice() {
+        return gpuMySqlDAO.findAllAvailableOrderByPrice();
+    }
+
+    public List<GPU> findAllAvailableThatContainOrderByPrice(String name) {
+        return gpuMySqlDAO.findAllAvailableThatContainOrderByPrice(name);
+    }
+
+    public List<GPU> findAllThatContainOrderByPrice(String name) {
+        return gpuMySqlDAO.findAllThatContainOrderByPrice(name);
+    }
+
+    public List<GPU> findAllAvailableThatContain(String name) {
+        return gpuMySqlDAO.findAllAvailableThatContain(name);
+    }
+
 }

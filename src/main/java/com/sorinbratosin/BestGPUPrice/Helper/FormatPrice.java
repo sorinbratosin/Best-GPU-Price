@@ -2,13 +2,13 @@ package com.sorinbratosin.BestGPUPrice.Helper;
 
 public class FormatPrice {
 
-    private String price;
+    private double price;
 
     public FormatPrice(String strPrice) {
         price = formatPrice(strPrice);
     }
 
-    private String formatPrice(String s) {
+    private double formatPrice(String s) {
         String trimLei = s.trim().substring(0, s.length()-4);
         if(trimLei.contains(".")) {
             trimLei = trimLei.replace(".", "");
@@ -22,10 +22,10 @@ public class FormatPrice {
         String lastDigits = trimLei.substring(trimLei.length()-2);
         trimLei = trimLei.trim().substring(0, trimLei.length()-2) + "." + lastDigits;
 
-        return trimLei;
+        return Double.parseDouble(trimLei);
     }
 
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 }

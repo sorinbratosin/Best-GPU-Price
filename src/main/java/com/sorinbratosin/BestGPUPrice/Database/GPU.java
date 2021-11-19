@@ -1,7 +1,8 @@
 package com.sorinbratosin.BestGPUPrice.Database;
 
 public class GPU {
-    private String name,price,url;
+    private String name,url;
+    private double price;
     private boolean available;
     private int id;
 
@@ -13,11 +14,11 @@ public class GPU {
         this.name = name;
     }
 
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

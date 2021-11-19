@@ -16,14 +16,14 @@ public class Main {
             System.out.println(++x + ". " + gpu.getName() + "\n" + "Price: " + gpu.getPrice() + "; Available: " + gpu.isAvailable() + "; URL: " + gpu.getUrl());
         } */
 
-        PcGarageCrawler pcGarageCrawler = new PcGarageCrawler();
+        /*PcGarageCrawler pcGarageCrawler = new PcGarageCrawler();
 
             List<GPU> pcGarageGpuList = pcGarageCrawler.getAllGPU();
             int x = 0;
             for (GPU gpu : pcGarageGpuList) {
                 System.out.println(++x + ". " + gpu.getName() + "\n" + "Price: " + gpu.getPrice() + "; Available: " + gpu.isAvailable() + "; URL: " + gpu.getUrl());
-            }
-        }
+            }*/
 
         MainWindow mainWindow = new MainWindow();
+        }
     }

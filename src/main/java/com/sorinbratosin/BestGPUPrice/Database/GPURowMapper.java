@@ -9,7 +9,7 @@ public class GPURowMapper {
         GPU gpu = new GPU();
             gpu.setId(rs.getInt("id"));
             gpu.setName(rs.getString("name"));
-            gpu.setPrice(rs.getString("price"));
+            gpu.setPrice(rs.getDouble("price"));
             gpu.setAvailable(rs.getBoolean("availability"));
             gpu.setUrl(rs.getString("url"));
         return gpu;

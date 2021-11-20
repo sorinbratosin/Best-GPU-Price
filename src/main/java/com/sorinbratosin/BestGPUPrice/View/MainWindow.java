@@ -1,4 +1,5 @@
 package com.sorinbratosin.BestGPUPrice.View;
+import com.sorinbratosin.BestGPUPrice.Crawler.CrawlerManager;
 import com.sorinbratosin.BestGPUPrice.Database.GPU;
 import com.sorinbratosin.BestGPUPrice.Database.IllegalCharactersException;
 import com.sorinbratosin.BestGPUPrice.Service.GPUService;
@@ -23,11 +24,7 @@ public class MainWindow {
     private List<GPU> gpuList = new ArrayList<>();
     private GPUService gpuService = new GPUService();
 
-    public MainWindow() {
-        createFrame();
-    }
-
-    private void createFrame() {
+    public void createFrame() {
         JFrame jFrame = new JFrame("GPU Crawler");
         JPanel buttonAndTextPanel = new JPanel();
         JPanel gpuPanel = new JPanel();
@@ -63,7 +60,13 @@ public class MainWindow {
 
         extractButton.addActionListener(e -> {
             gpuService.truncateTable();
+            CrawlerManager crawlerManager = new CrawlerManager();
+            crawlerManager.crawl();
 
+            while(crawlerManager.getEmagThread().isAlive() || crawlerManager.getPcGarageThread().isAlive()) {
+                JOptionPane.showMessageDialog(jFrame, "Please wait for the extraction to be over!");
+            }
+            tableModel.setDataVector(dataSelectAllGPU(), COLUMN_NAMES);
         });
 
         tableModel = new DefaultTableModel(dataSelectAllGPU(), COLUMN_NAMES);
@@ -80,7 +83,7 @@ public class MainWindow {
 
         jFrame.setVisible(true);
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jFrame.setSize(1500, 1500);
+        jFrame.setSize(1500, 1000);
         jFrame.setLocationRelativeTo(null);
         jFrame.getContentPane().add(BorderLayout.NORTH, buttonAndTextPanel);
         jFrame.getContentPane().add(BorderLayout.CENTER, gpuPanel);

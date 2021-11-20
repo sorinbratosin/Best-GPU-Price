@@ -19,6 +19,7 @@ public class MainWindow {
     private JCheckBox orderByPriceAsc;
     private JCheckBox inStock;
     private DefaultTableModel tableModel;
+    private JTable table;
     private static final String[] COLUMN_NAMES = {"Id", "Name", "Price", "Availability", "URL"};
     private static final int NUM_OF_COLUMNS = COLUMN_NAMES.length;
     private List<GPU> gpuList = new ArrayList<>();
@@ -52,6 +53,7 @@ public class MainWindow {
                 } else if (inStock.isSelected() && orderByPriceAsc.isSelected()) {
                     tableModel.setDataVector(dataSelectAllGPUAvailableThatContainOrderByPriceAsc(value), COLUMN_NAMES);
                 }
+                setColumnsWidth();
             } catch (IllegalCharactersException illegalCharactersException) {
                 searchTextField.setText("");
                 JOptionPane.showMessageDialog(jFrame, illegalCharactersException.getMessage());
@@ -67,11 +69,13 @@ public class MainWindow {
                 JOptionPane.showMessageDialog(jFrame, "Please wait for the extraction to be over!");
             }
             tableModel.setDataVector(dataSelectAllGPU(), COLUMN_NAMES);
+            setColumnsWidth();
         });
 
         tableModel = new DefaultTableModel(dataSelectAllGPU(), COLUMN_NAMES);
-        JTable table = new JTable(tableModel);
+        table = new JTable(tableModel);
         table.setFillsViewportHeight(true);
+        setColumnsWidth();
 
         JScrollPane scroller = new JScrollPane(table);
         scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -149,5 +153,13 @@ public class MainWindow {
         gpuList = gpuService.findAllAvailableThatContainOrderByPrice(containsName);
         int numOfRows = gpuList.size();
         return tableData(numOfRows);
+    }
+
+    private void setColumnsWidth() {
+        table.getColumnModel().getColumn(0).setPreferredWidth(40);
+        table.getColumnModel().getColumn(1).setPreferredWidth(1000);
+        table.getColumnModel().getColumn(2).setPreferredWidth(85);
+        table.getColumnModel().getColumn(3).setPreferredWidth(75);
+        table.getColumnModel().getColumn(4).setMinWidth(200);
     }
 }
